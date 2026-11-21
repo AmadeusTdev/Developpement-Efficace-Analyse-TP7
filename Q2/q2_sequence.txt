@@ -1,0 +1,45 @@
+@startuml
+
+participant User
+participant Clavier
+participant System
+participant Voyant
+participant Minuteur
+participant BD
+participant Porte
+participant Archive
+
+note over Voyant
+  Voyant rouge
+end note
+
+User -> Clavier : chiffre 1
+Clavier -> System : saisirChiffre(chiffre 1)
+
+System -> Voyant : allumer(vert)
+System -> Minuteur : demarrer(5s)
+
+User -> Clavier : chiffre 2
+Clavier -> System : saisirChiffre(chiffre 2)
+User -> Clavier : chiffre 3
+Clavier -> System : saisirChiffre(chiffre 3)
+User -> Clavier : chiffre 4
+Clavier -> System : saisirChiffre(chiffre 4)
+
+System -> Minuteur : arreter()
+System -> Voyant : eteindre()
+
+System -> BD : verifierCode(code)
+BD -> System : true
+System -> Archive : enregistrer(code, dateHeure)
+
+System -> Porte : deverouiller()
+System -> Minuteur : demarrer(20s)
+User -> Porte : ouvrir()
+User -> Porte : fermer()
+System -> Minuteur : arreter()
+System -> Porte : verouiller()
+
+System -> Voyant : allumer(rouge)
+
+@enduml
