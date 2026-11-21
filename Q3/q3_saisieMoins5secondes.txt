@@ -1,0 +1,66 @@
+@startuml
+
+participant User
+participant Clavier
+participant System
+participant Voyant
+participant Minuteur
+participant BD
+participant Porte
+participant Archive
+
+note over Voyant
+  Voyant rouge
+end note
+
+User -> Clavier : chiffre 1
+Clavier -> System : saisirChiffre(chiffre 1)
+
+System -> Voyant : allumer(vert)
+
+System -> Minuteur : demarrer(5s)
+note over Minuteur
+  duree = 5
+end note
+
+note over System
+  codeSaisie+=c1
+  len(codeSaisie) > 3 : false
+end note
+
+User -> Clavier : chiffre 2
+Clavier -> System : saisirChiffre(chiffre 2)
+
+note over System
+  codeSaisie+=c2
+  len(codeSaisie) > 3 : false
+end note
+
+User -> Clavier : chiffre 3
+Clavier -> System : saisirChiffre(chiffre 3)
+
+note over System
+  codeSaisie+=c3
+  len(codeSaisie) > 3 : false
+end note
+
+User -> Clavier : chiffre 4
+Clavier -> System : saisirChiffre(chiffre 4)
+
+note over System
+  codeSaisie+=c4
+  len(codeSaisie) > 3 : true
+end note
+
+System -> Minuteur : arreter()
+System -> Voyant : eteindre()
+
+System -> BD : verifierCode(codeSaisie)
+note over BD
+  verifie BD
+end note
+BD -> System : true
+
+System -> Archive : enregistrer(codeSaisie, dateHeure)
+
+@enduml

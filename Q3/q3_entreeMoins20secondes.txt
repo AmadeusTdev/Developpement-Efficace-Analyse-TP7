@@ -1,0 +1,39 @@
+@startuml
+
+participant User
+participant Clavier
+participant System
+participant Voyant
+participant Minuteur
+participant BD
+participant Porte
+participant Archive
+
+System -> Porte : deverouiller()
+
+System -> Minuteur : demarrer(20s)
+note over Minuteur
+  duree = 20
+end note
+
+
+User -> Porte : ouvrir()
+note over Porte
+  est_ouverte = true
+end note
+
+note over User
+  passe la porte
+end note
+
+User -> Porte : fermer()
+note over Porte
+  est_ouverte = false
+end note
+
+System -> Minuteur : arreter()
+System -> Porte : verouiller()
+
+System -> Voyant : allumer(rouge)
+
+@enduml

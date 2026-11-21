@@ -1,0 +1,58 @@
+@startuml
+
+enum Couleur {
+  ROUGE
+  VERT
+}
+
+class Systeme {
+  - codeSaisi : String
+  + saisirChiffre(c : int)
+}
+
+class BD {
+  + verifierCode()
+}
+
+class Clavier {
+  + lireChiffre() : int
+}
+class Voyant {
+  - est_allumer : Boolean
+  + allumer(couleur : Couleur)
+  + eteindre()
+}
+class Porte {
+  - est_ouverte : boolean
+  + deverrouiller()
+  + verrouiller()
+  + estOuverte() : boolean
+  + ouvrir()
+  + fermer()
+}
+class Alarme {
+  + declencher()
+}
+
+class Archive {
+  - fichier : String
+  + enregistrer(code : String, dateHeure : DateTime)
+}
+
+class CompteArebourd {
+  - duree : int
+  + demarrer(secondes : int)
+  + arreter()
+}
+
+Systeme "1" --> "1" Clavier
+Systeme "1" --> "2" Voyant
+Systeme "1" --> "1" Porte
+Systeme "1" --> "1" Alarme
+
+Systeme "1" --> "1" Archive
+Systeme "1" --> "1..2" CompteArebourd
+
+Systeme "1" --> "1" BD
+
+@enduml
